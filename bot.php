@@ -1,7 +1,9 @@
 <?php
 $access_token = '2Jzs//UusGskjjlWxp0sbItd2EiaRejHjOkA4xabVoxVvlqDU7wPCNA2eUA0QIs2RITMSs1FIc4hPNtyt9DZ8XMesX0OsGm+9NhoZYp/hFf3lxXTWruLbJE5F1bpNerhxfwZMpB6v5u1cojixCw7XAdB04t89/1O/w1cDnyilFU=';
 
-
+if (isset($_GET['mesg'])) {
+      $mesg = $_GET['mesg'];
+}
 
 // Get POST body content
 $content = file_get_contents('php://input');
@@ -15,13 +17,14 @@ if (!is_null($events['events'])) {
 		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 			// Get text sent
 			$text = $event['message']['text'];
+			$text = $text.' '.$mesg;
 			// Get replyToken
 			$replyToken = $event['replyToken'];
 
 			// Build message to reply back
 			$messages = [
 				'type' => 'text',
-				'text' => $text || 'ว่ะ'
+				'text' => $text
 			];
 
 			// Make a POST Request to Messaging API to reply to sender
